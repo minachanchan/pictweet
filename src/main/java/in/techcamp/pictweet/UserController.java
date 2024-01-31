@@ -1,0 +1,30 @@
+package in.techcamp.pictweet;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+
+@Controller
+public class UserController {
+    @Autowired
+    private UserRepository userRepository;
+
+    @GetMapping("/registerForm")
+    public String register(@ModelAttribute("user")UserEntity userEntity){
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public String registerNewUser(@ModelAttribute("user")UserEntity userEntity, Model model){
+        try {
+            userRepository.save(userEntity);
+        } catch (Exception e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "register";
+        }
+        return "redirect:/";
+    }
+}
