@@ -29,7 +29,8 @@ public class TweetController {
 //                new TweetEntity(2, "投稿2", ""),
 //                new TweetEntity(3, "投稿3", "")
 //        );
-        var tweetList = tweetRepository.findAll();
+//        var tweetList = tweetRepository.findAll();
+        List<TweetEntity> tweetList = tweetRepository.findAll();
         model.addAttribute("tweets",tweetList);
         return "index";
     }
