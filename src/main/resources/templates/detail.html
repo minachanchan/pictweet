@@ -12,7 +12,11 @@
 
 <div class="button" th:if="${#authentication.name == t.user.username}">
     <a class="update-button" th:href="@{/user/{userId}/tweet/{tweetId}/edit(userId=${t.user.id}, tweetId=${t.id})}">編集</a>
+    <form th:action="@{/user/{userId}/tweet/{tweetId}/delete(userId=${t.user.id}, tweetId=${t.id})}" method="post">
+        <input class="delete-button" type="submit" value="削除">
+    </form>
 </div>
+
 
     <li th:text = "${t.getContent()}">
     </li>
