@@ -14,7 +14,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class TweetController {
-    private final TweetRepository tR;
+    private final TweetRepository tweetRepository;
 
 //    @GetMapping("/tweets")
 //    @ResponseBody
@@ -29,7 +29,7 @@ public class TweetController {
 //                new TweetEntity(2, "投稿2", ""),
 //                new TweetEntity(3, "投稿3", "")
 //        );
-        var tweetList = tR.findAll();
+        var tweetList = tweetRepository.findAll();
         model.addAttribute("tweets",tweetList);
         return "index";
     }
@@ -40,8 +40,18 @@ public class TweetController {
     }
 
     @PostMapping("/tweets")
-    public String saveTweet(TweetForm form){
-        tR.insertTweet(form.getContent(), form.getImage());
+    public  String createTweet(TweetForm form,
+                               Model model){
+        try{
+            tweetRepository.insert(form.getContent(),form.getImage());
+        } catch (Exception e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
         return "redirect:/";
     }
+//    public String saveTweet(TweetForm form){
+//        tweetRepository.insertTweet(form.getContent(), form.getImage());
+//        return "redirect:/";
+//    }
 }
