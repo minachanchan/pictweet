@@ -12,6 +12,9 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/registerForm")
     public String register(@ModelAttribute("user")UserEntity userEntity){
         return "register";
@@ -26,5 +29,10 @@ public class UserController {
             return "register";
         }
         return "redirect:/";
+    }
+
+    @GetMapping("/loginForm")
+    public String loginForm(){
+        return "login";
     }
 }
