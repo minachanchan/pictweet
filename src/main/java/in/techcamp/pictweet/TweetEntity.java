@@ -1,14 +1,23 @@
 package in.techcamp.pictweet;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@AllArgsConstructor
+//@AllArgsConstructor
 @Data
+@Table(name = "tweets")
+@Entity
 public class TweetEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private long id;
     private String content;
     private String image;
+
+    @ManyToOne
+    private  UserEntity user;
 
 //    public TweetEntity(long id, String content, String image) {
 //        this.id = id;
