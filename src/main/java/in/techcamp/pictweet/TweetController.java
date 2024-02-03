@@ -1,6 +1,9 @@
 package in.techcamp.pictweet;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +17,12 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class TweetController {
-    private final TweetRepository tweetRepository;
+//    private final TweetRepository tweetRepository;
+    @Autowired
+    private TweetRepository tweetRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
 //    @GetMapping("/tweets")
 //    @ResponseBody
@@ -46,7 +54,12 @@ public class TweetController {
     @PostMapping("/tweets")
 //    public  String createTweet(TweetForm form,
       public  String createTweet(@ModelAttribute("tweetForm") TweetEntity tweetEntity,
+                               Authentication authentication,
                                Model model){
+        User authenticatedUser = (User) authentication.getPrincipal();
+        String username = authenticatedUser.getUsername();
+        UserEntity user = userRepository.findByUsername(username);
+        tweetEntity.setUser(user);
         try{
 //            tweetRepository.insert(form.getContent(),form.getImage());
             tweetRepository.save(tweetEntity);
