@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>新規投稿</title>
+</head>
+<body>
+
+<div th:insert="~{header :: header}"></div>
+
+<h1>新規投稿ページ</h1>
+<!--<form th:action="@{/tweets}" th:method="post" th:object="${tweetF}">-->
+<form action="#" th:action="@{/user/{userId}/tweet/{tweetId}/update(userId=${tweet.user.id},tweetId=${tweet.getId()})}" th:method="post" th:object="${tweet}">
+    <input type="text" id="summaryInput" th:field="*{content}">
+    <input type="text" id="summaryInput" th:field="*{image}">
+    <button type="submit">作成</button>
+</form>
+</body>
+</html>

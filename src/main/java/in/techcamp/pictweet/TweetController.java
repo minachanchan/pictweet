@@ -3,6 +3,7 @@ package in.techcamp.pictweet;
 //import lombok.RequiredArgsConstructor;
 //import org.apache.catalina.User;
 import jakarta.persistence.EntityNotFoundException;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
@@ -51,7 +52,7 @@ public class TweetController {
 //        return "newTweetForm";
 //    }
     public String showTweetForm(@ModelAttribute("tweetF") TweetEntity tweetEntity){
-        return "newTweetForm";
+        return "new";
     }
 
     @PostMapping("/tweets")
@@ -90,9 +91,24 @@ public class TweetController {
 
         model.addAttribute("t", tweet);
         return  "detail";
-   }
+    }
 
 
+    @GetMapping("/user/{userId}/tweet/{tweetId}/edit")
+    public String edit(@PathVariable("tweetId") Integer tweetId, Model model){
+
+        TweetEntity tweet;
+
+        try{
+            tweet = tweetRepository.findById(tweetId)
+                    .orElseThrow(() -> new EntityNotFoundException("Tweet not found:" + tweetId));
+        }catch (EntityNotFoundException ex){
+            model.addAttribute("errorMessage", ex.getMessage());
+            return "error";
+        }
+        model.addAttribute("tweet", tweet);
+        return  "edit";
+    }
 
 
 
