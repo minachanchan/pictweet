@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:insert="~{header :: header}"></div>
+
+<h1>ツイート詳細画面</h1>
+
+<div class="button" th:if="${#authentication.name == t.user.username}">
+    <a class="update-button" th:href="@{/user/{userId}/tweet/{tweetId}/edit(userId=${t.user.id}, tweetId=${t.id})}">編集</a>
+</div>
+
+    <li th:text = "${t.getContent()}">
+    </li>
+    <li th:text = "${t.getImage()}">
+    </li>
+    <li th:text = "${t.user.getUsername()}">
+    </li>
+
+</body>
+</html>
