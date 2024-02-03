@@ -111,6 +111,45 @@ public class TweetController {
     }
 
 
+    @PostMapping("/user/{userId}/tweet/{tweetId}/update")
+    public String update(Authentication authentication,
+                         @ModelAttribute("tweet") TweetEntity tweetEntity,
+                         @PathVariable("userId") Integer userId,
+                         @PathVariable("tweetId") Integer tweetId,
+                         Model model
+    ) {
+
+        String username = authentication.getName();
+
+        TweetEntity tweet;
+        UserEntity user;
+
+        try {
+            tweet = tweetRepository.findById(tweetId).orElseThrow(() -> new EntityNotFoundException("Issue not found: " + tweetId));
+            user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
+        } catch (EntityNotFoundException ex) {
+            model.addAttribute("errorMessage", ex.getMessage());
+            return "error";
+        }
+
+        if (user.getUsername().equals(username)) {
+            try {
+                tweet.setContent(tweetEntity.getContent());
+                tweet.setImage(tweetEntity.getImage());
+
+                tweetRepository.save(tweet);
+            } catch (Exception e) {
+                model.addAttribute("errorMessage", e.getMessage());
+                return "error";
+            }
+        } else {
+            model.addAttribute("errorMessage", "ツイートの投稿者と一致しません。");
+            return "error";
+        }
+        return "redirect:/tweet/" + tweetId;
+    }
+
+
 
 
 }

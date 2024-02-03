@@ -13,7 +13,7 @@
 <form action="#" th:action="@{/user/{userId}/tweet/{tweetId}/update(userId=${tweet.user.id},tweetId=${tweet.getId()})}" th:method="post" th:object="${tweet}">
     <input type="text" id="summaryInput" th:field="*{content}">
     <input type="text" id="summaryInput" th:field="*{image}">
-    <button type="submit">作成</button>
+    <button type="submit">更新</button>
 </form>
 </body>
 </html>
