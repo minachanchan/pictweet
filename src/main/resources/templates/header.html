@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <header th:fragment="header">
     <div class="header-container">
-        <a class="app-name" th:href="@{/}">IssueApp</a>
+        <a class="app-name" th:href="@{/}">Pictweet</a>
 
         <!-- ログイン時 -->
         <div class="header-info"  th:if="${#authorization.expression('isAuthenticated()')}">
