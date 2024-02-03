@@ -36,15 +36,20 @@ public class TweetController {
     }
 
     @GetMapping("/tweetForm")
-    public String showTweetForm(@ModelAttribute("tweetF") TweetForm form){
+//    public String showTweetForm(@ModelAttribute("tweetF") TweetForm form){
+//        return "newTweetForm";
+//    }
+    public String showTweetForm(@ModelAttribute("tweetF") TweetEntity tweetEntity){
         return "newTweetForm";
     }
 
     @PostMapping("/tweets")
-    public  String createTweet(TweetForm form,
+//    public  String createTweet(TweetForm form,
+      public  String createTweet(@ModelAttribute("tweetForm") TweetEntity tweetEntity,
                                Model model){
         try{
-            tweetRepository.insert(form.getContent(),form.getImage());
+//            tweetRepository.insert(form.getContent(),form.getImage());
+            tweetRepository.save(tweetEntity);
         } catch (Exception e){
             model.addAttribute("errorMessage", e.getMessage());
             return "error";
