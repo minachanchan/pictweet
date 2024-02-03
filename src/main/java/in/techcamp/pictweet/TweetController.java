@@ -82,7 +82,7 @@ public class TweetController {
         TweetEntity tweet;
 
         try {
-            tweet = tweetRepository.findBy(tweetId).orElseThrow(() -> new EntityNotFoundException("Tweet not found:" + tweetId));
+            tweet = tweetRepository.findById(tweetId).orElseThrow(() -> new EntityNotFoundException("Tweet not found:" + tweetId));
         } catch (EntityNotFoundException ex){
             model.addAttribute("errorMessage", ex.getMessage());
             return "error";

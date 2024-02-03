@@ -11,6 +11,9 @@
 <a th:href="@{/tweetForm}">新規投稿画面</a>
 投稿の一覧表示
   <ul th:each = "t:${tweets}">
+      <div class="button" >
+          <a class="update-button" th:href="@{/tweet/{tweetId}(tweetId=${t.id})}">詳細</a>
+      </div>
       <li th:text = "${t.getContent()}">
       </li>
       <li th:text = "${t.getImage()}">
