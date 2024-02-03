@@ -5,6 +5,9 @@
     <title>Title</title>
 </head>
 <body>
+
+<div th:insert="~{header :: header}"></div>
+
 <a th:href="@{/tweetForm}">新規投稿画面</a>
 投稿の一覧表示
   <ul th:each = "t:${tweets}">

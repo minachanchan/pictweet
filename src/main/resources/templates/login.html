@@ -3,34 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
-    <title>ユーザー新規登録</title>
+    <title>Title</title>
 </head>
+
 <body>
 
 <div th:insert="~{header :: header}"></div>
 
 <div class="page-title">
-    <h1>ユーザー新規登録</h1>
+    <h1>ログイン</h1>
 </div>
 
-<p th:if="${errorMessage}" class="login-error" th:text="${errorMessage}"></p>
-
 <div class="form">
-    <form th:action="@{/register}" th:method="post" th:object="${user}">
+
+    <p th:if="${param.error}" class="login-error" th:text="${loginError}"></p>
+
+    <form th:action="@{/login}" th:method="post">
+
         <div class="form_title">
             <h2 class="column-title">名前</h2>
-            <input type="text" id="username" name="username"/>
+            <input type="text" id="username" name="username" autofocus="autofocus" required="required" />
         </div>
 
         <div class="form_title">
             <h2 class="column-title">パスワード</h2>
-            <input type="password" id="password" name="password"/>
+            <input type="password" id="password" name="password" required="required" />
         </div>
 
         <div class="form_submit">
-            <button type="submit">新規登録</button>
+            <button type="submit">ログイン</button>
         </div>
     </form>
 </div>
+
 </body>
 </html>

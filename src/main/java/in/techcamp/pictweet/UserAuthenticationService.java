@@ -16,11 +16,11 @@ public class UserAuthenticationService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity userEntity = userRepository.findByUsername(username);
 
-        if (userEntity == null){
-            throw new UsernameNotFoundException("User not found with username:" + username);
+        if (userEntity == null) {
+            throw new UsernameNotFoundException("User not found with username: " + username);
         }
 
         return new User(userEntity.getUsername(), userEntity.getPassword(), Collections.emptyList());
