@@ -1,6 +1,10 @@
 package in.techcamp.pictweet;
 
-import lombok.RequiredArgsConstructor;
+//import lombok.RequiredArgsConstructor;
+//import org.apache.catalina.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,9 +16,14 @@ import java.util.List;
 //import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class TweetController {
-    private final TweetRepository tR;
+//    private final TweetRepository tweetRepository;
+    @Autowired
+    private TweetRepository tweetRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
 //    @GetMapping("/tweets")
 //    @ResponseBody
@@ -29,19 +38,40 @@ public class TweetController {
 //                new TweetEntity(2, "投稿2", ""),
 //                new TweetEntity(3, "投稿3", "")
 //        );
-        var tweetList = tR.findAll();
+//        var tweetList = tweetRepository.findAll();
+        List<TweetEntity> tweetList = tweetRepository.findAll();
         model.addAttribute("tweets",tweetList);
         return "index";
     }
 
     @GetMapping("/tweetForm")
-    public String showTweetForm(@ModelAttribute("tweetF") TweetForm form){
+//    public String showTweetForm(@ModelAttribute("tweetF") TweetForm form){
+//        return "newTweetForm";
+//    }
+    public String showTweetForm(@ModelAttribute("tweetF") TweetEntity tweetEntity){
         return "newTweetForm";
     }
 
     @PostMapping("/tweets")
-    public String saveTweet(TweetForm form){
-        tR.insertTweet(form.getContent(), form.getImage());
+//    public  String createTweet(TweetForm form,
+      public  String createTweet(@ModelAttribute("tweetForm") TweetEntity tweetEntity,
+                               Authentication authentication,
+                               Model model){
+        User authenticatedUser = (User) authentication.getPrincipal();
+        String username = authenticatedUser.getUsername();
+        UserEntity user = userRepository.findByUsername(username);
+        tweetEntity.setUser(user);
+        try{
+//            tweetRepository.insert(form.getContent(),form.getImage());
+            tweetRepository.save(tweetEntity);
+        } catch (Exception e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error";
+        }
         return "redirect:/";
     }
+//    public String saveTweet(TweetForm form){
+//        tweetRepository.insertTweet(form.getContent(), form.getImage());
+//        return "redirect:/";
+//    }
 }
