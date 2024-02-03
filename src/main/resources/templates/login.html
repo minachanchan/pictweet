@@ -8,6 +8,8 @@
 
 <body>
 
+<div th:insert="~{header :: header}"></div>
+
 <div class="page-title">
     <h1>ログイン</h1>
 </div>
@@ -16,7 +18,7 @@
 
     <p th:if="${param.error}" class="login-error" th:text="${loginError}"></p>
 
-    <form th:action="@{/login}" method="post">
+    <form th:action="@{/login}" th:method="post">
 
         <div class="form_title">
             <h2 class="column-title">名前</h2>
