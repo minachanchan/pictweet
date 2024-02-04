@@ -688,6 +688,7 @@ div.contents.row div.content_post p {
 
 .transition,
 a,
+button,
 form input[type="submit"] {
   -moz-transition-property: all;
   -o-transition-property: all;
@@ -993,6 +994,7 @@ form textarea {
   font-family: "游ゴシック", "YuGothic";
 }
 
+button,
 form input[type="submit"] {
   background-color: #57C3E9;
   border-radius: 20px;

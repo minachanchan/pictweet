@@ -32,7 +32,7 @@
     <div class="header__bar row">
         <h1 class="grid-6"><a th:href="@{/}">PicTweet</a></h1>
         <div th:if="${#authorization.expression('isAuthenticated()')}" class="user_nav grid-6">
-                <span th:text="${#authentication?.principal?.nickname}">
+                <span th:text="${#authentication?.principal?.username}">
                     <!-- ログインユーザのニックネーム表示 -->
                     <ul class="user__info">
                         <li>
