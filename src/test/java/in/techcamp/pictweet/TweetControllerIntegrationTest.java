@@ -21,6 +21,6 @@ public class TweetControllerIntegrationTest {
         mockMvc.perform(get("/")) // ①
                 .andExpect(status().isOk()) // ②
                 .andExpect(view().name("index")) // ③
-                .andExpect(model().attributeExists("tweetList")); // ④
+                .andExpect(model().attributeExists("tweets")); // ④
     }
 }
