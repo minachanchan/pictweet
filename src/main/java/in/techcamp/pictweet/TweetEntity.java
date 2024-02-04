@@ -3,6 +3,7 @@ package in.techcamp.pictweet;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -18,10 +19,12 @@ public class TweetEntity {
     private String content;
     private String image;
 
-    @ManyToOne
+    @ToString.Exclude
+    @ManyToOne(fetch = FetchType.EAGER)
     private  UserEntity user;
 
-    @OneToMany(mappedBy = "tweet",cascade = CascadeType.REMOVE)
+    @ToString.Exclude
+    @OneToMany(mappedBy = "tweet",cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
     private List<CommentEntity> comments;
 
 //    public TweetEntity(long id, String content, String image) {
