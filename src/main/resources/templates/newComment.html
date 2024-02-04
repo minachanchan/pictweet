@@ -4,11 +4,11 @@
     <h2>コメントする</h2>
 </div>
 
-<form th:action="@{/tweet/{tweetId}/comment(tweetId=${tweet.id})}" th:method="post" th:object="${commentEntity}">
+<form th:action="@{/tweet/{tweetId}/comment(tweetId=${t.id})}" th:method="post" th:object="${commentEntity}">
     <div class="comment-form-wrapper" >
         <textarea class="comment-form" id="message" th:field="*{message}" required="required" />
         <div>
-            <button class="comment-submit" type="submit">コメントする</button>
+            <button class="comment-submit" type="submit">SEND</button>
         </div>
     </div>
 </form>
