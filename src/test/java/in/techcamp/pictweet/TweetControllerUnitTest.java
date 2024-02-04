@@ -47,7 +47,7 @@ public class TweetControllerUnitTest {
         String result = tweetController.showTweetDetail(1, new CommentEntity(), model);
 
         assertThat(result, is("detail"));
-        assertThat(model.getAttribute("issue"), is(expectedTweet));
+        assertThat(model.getAttribute("t"), is(expectedTweet));
         assertThat(model.getAttribute("comments"), is(expectedComments));
     }
 }
