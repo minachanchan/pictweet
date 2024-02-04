@@ -5,9 +5,19 @@ CREATE TABLE IF NOT EXISTS users (
    PRIMARY KEY (id)
 );
 CREATE TABLE IF NOT EXISTS tweets (
-    id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id       INT             NOT NULL AUTO_INCREMENT,
     content VARCHAR(256) NOT NULL,
     image VARCHAR(256),
     user_id    INT          NOT NULL,
+    PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES users(id)
+);
+CREATE TABLE IF NOT EXISTS comments (
+  id       INT          NOT NULL AUTO_INCREMENT,
+  message  VARCHAR(256) NOT NULL,
+  user_id  INT          NOT NULL,
+  tweet_id INT          NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (user_id)  REFERENCES users(id),
+  FOREIGN KEY (tweet_id) REFERENCES tweets(id)
 );

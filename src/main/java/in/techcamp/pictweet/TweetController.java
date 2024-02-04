@@ -28,6 +28,9 @@ public class TweetController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private  CommentRepository commentRepository;
+
 //    @GetMapping("/tweets")
 //    @ResponseBody
 //    public String showHello(){
@@ -79,7 +82,9 @@ public class TweetController {
 //    }
 
    @GetMapping("/tweet/{tweetId}")
-    public String showTweetDetail(@PathVariable("tweetId") Integer tweetId, Model model){
+    public String showTweetDetail(@PathVariable("tweetId") Integer tweetId,
+                                  @ModelAttribute("commentEntity") CommentEntity commentEntity,
+                                  Model model){
         TweetEntity tweet;
 
         try {
@@ -89,6 +94,8 @@ public class TweetController {
             return "error";
         }
 
+        List<CommentEntity> comments = commentRepository.findByTweet_id(tweetId);
+        model.addAttribute("comments",comments);
         model.addAttribute("t", tweet);
         return  "detail";
     }
