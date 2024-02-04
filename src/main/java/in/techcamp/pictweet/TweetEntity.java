@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.List;
+
 //@AllArgsConstructor
 @Data
 @Table(name = "tweets")
@@ -18,6 +20,9 @@ public class TweetEntity {
 
     @ManyToOne
     private  UserEntity user;
+
+    @OneToMany(mappedBy = "tweet",cascade = CascadeType.REMOVE)
+    private List<CommentEntity> comments;
 
 //    public TweetEntity(long id, String content, String image) {
 //        this.id = id;
