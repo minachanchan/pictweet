@@ -1,20 +1,62 @@
-<html xmlns:th="http://www.thymeleaf.org" lang="ja">
-<header th:fragment="header">
-    <div class="header-container">
-        <a class="app-name" th:href="@{/}">Pictweet</a>
+<!--<html xmlns:th="http://www.thymeleaf.org" lang="ja">-->
+<!--<header th:fragment="header">-->
+<!--    <div class="header__bar row">-->
+<!--        <h1 class="grid-6"><a th:href="@{/}">Pictweet</a></h1>-->
 
-        <!-- ログイン時 -->
-        <div class="header-info"  th:if="${#authorization.expression('isAuthenticated()')}">
-            <p class="user-name"><span  th:text="${#authentication?.name}"></span>さん</p>
-            <form th:action="@{/logout}" method="post">
-                <input class="logout-button" type="submit" value="ログアウト"/>
-            </form>
+<!--        &lt;!&ndash; ログイン時 &ndash;&gt;-->
+<!--        <div class="header-info"  th:if="${#authorization.expression('isAuthenticated()')}">-->
+<!--            <p class="user-name"><span  th:text="${#authentication?.name}"></span>さん</p>-->
+<!--            <form th:action="@{/logout}" method="post">-->
+<!--                <input class="logout-button" type="submit" value="ログアウト"/>-->
+<!--            </form>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; 非ログイン時 &ndash;&gt;-->
+<!--        <div class="header-info" th:if="${#authorization.expression('!isAuthenticated()')}">-->
+<!--            <a class="header-button" th:href="@{/registerForm}">新規登録</a>-->
+<!--            <a class="header-button" th:href="@{/loginForm}">ログイン</a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</header>-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <title>Pictweet</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/application.css}" /> <!-- CSSファイルパスはプロジェクトに合わせて変更してください -->
+    <script th:src="@{/js/application.js}"></script> <!-- JavaScriptファイルパスはプロジェクトに合わせて変更してください -->
+</head>
+<body>
+<header class="header">
+    <div class="header__bar row">
+        <h1 class="grid-6"><a th:href="@{/}">PicTweet</a></h1>
+        <div th:if="${#authorization.expression('isAuthenticated()')}" class="user_nav grid-6">
+                <span th:text="${#authentication?.principal?.nickname}">
+                    <!-- ログインユーザのニックネーム表示 -->
+                    <ul class="user__info">
+                        <li>
+                            <a th:href="@{'/users/' + ${#authentication?.principal?.id}}">マイページ</a>
+                            <form th:action="@{/logout}" method="post">
+                                <input type="submit" value="ログアウト">
+                            </form>
+                        </li>
+                    </ul>
+                </span>
+            <a th:href="@{/tweets/new}" class="post">投稿する</a>
         </div>
 
-        <!-- 非ログイン時 -->
-        <div class="header-info" th:if="${#authorization.expression('!isAuthenticated()')}">
-            <a class="header-button" th:href="@{/registerForm}">新規登録</a>
-            <a class="header-button" th:href="@{/loginForm}">ログイン</a>
+        <div th:if="${#authorization.expression('!isAuthenticated()')}" class="grid-6">
+            <a th:href="@{/loginForm}" class="post">ログイン</a>
+            <a th:href="@{/registerForm}" class="post">新規登録</a>
         </div>
     </div>
 </header>
+
+<div th:replace="fragments/body :: body"></div> <!-- bodyの内容は別のThymeleaf fragmentに実装 -->
+
+<footer>
+    <p>Copyright Pictweet 2019.</p>
+</footer>
+</body>
+</html>
