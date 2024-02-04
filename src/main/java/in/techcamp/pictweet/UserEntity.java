@@ -17,9 +17,11 @@ public class UserEntity {
     private String username;
     private String password;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
     private List<TweetEntity> tweets;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
     private List<CommentEntity> comments;
 }

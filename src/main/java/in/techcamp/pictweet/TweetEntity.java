@@ -19,9 +19,11 @@ public class TweetEntity {
     private String content;
     private String image;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.EAGER)
     private  UserEntity user;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "tweet",cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
     private List<CommentEntity> comments;
 

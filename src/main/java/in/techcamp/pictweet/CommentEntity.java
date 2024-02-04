@@ -14,9 +14,11 @@ public class CommentEntity {
     private Integer id;
     private String message;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.EAGER)
     private UserEntity user;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.EAGER)
     private TweetEntity tweet;
 }
