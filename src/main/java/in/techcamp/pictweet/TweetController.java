@@ -79,7 +79,9 @@ public class TweetController {
 //    }
 
    @GetMapping("/tweet/{tweetId}")
-    public String showTweetDetail(@PathVariable("tweetId") Integer tweetId, Model model){
+    public String showTweetDetail(@PathVariable("tweetId") Integer tweetId,
+                                  @ModelAttribute("commentEntity") CommentEntity commentEntity,
+                                  Model model){
         TweetEntity tweet;
 
         try {
