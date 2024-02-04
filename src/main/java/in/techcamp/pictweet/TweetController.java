@@ -28,6 +28,9 @@ public class TweetController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private  CommentRepository commentRepository;
+
 //    @GetMapping("/tweets")
 //    @ResponseBody
 //    public String showHello(){
@@ -91,6 +94,8 @@ public class TweetController {
             return "error";
         }
 
+        List<CommentEntity> comments = commentRepository.findByTweet_id(tweetId);
+        model.addAttribute("comments",comments);
         model.addAttribute("t", tweet);
         return  "detail";
     }
