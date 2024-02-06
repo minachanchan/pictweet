@@ -795,7 +795,7 @@ header.header .user_nav div {
 header.header .user_nav div:after {
   content: '▼';
   font-size: .7em;
-  margin-left: -4px;
+  margin-left: 4px;
 }
 
 header.header .user_nav div:hover ul {
@@ -997,6 +997,8 @@ form textarea {
 
 button,
 form input[type="submit"] {
+  width: 100%;
+  padding: 10px;
   background-color: #57C3E9;
   border-radius: 20px;
   color: #fff;
