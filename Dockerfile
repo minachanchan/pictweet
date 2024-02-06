@@ -2,7 +2,8 @@
 FROM gradle:7.3.3-jdk11 AS build
 WORKDIR /app
 COPY --chown=gradle:gradle . /app
-RUN gradle clean build -x test
+# RUN gradle clean build -x test
+RUN gradle clean build -x test --stacktrace
 
 # 実行ステージ
 FROM openjdk:11-jre-slim
