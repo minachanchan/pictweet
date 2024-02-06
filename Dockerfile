@@ -8,7 +8,7 @@ RUN gradle clean build -x test
 FROM openjdk:11-jre-slim
 WORKDIR /app
 
-# ビルドステージからビルド成果物をコピー（具体的なJARファイル名を指定）
+# ビルドステージからビルド成果物をコピー
 COPY --from=build /app/build/libs/pictweet-0.0.1-SNAPSHOT.jar /app/pictweet.jar
 
 # 実行コマンド
