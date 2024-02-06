@@ -47,11 +47,10 @@
                 <li th:if="${#authorization.expression('isAuthenticated()') and tweet.user.username == #authentication.principal.username}">
                     <a th:href="@{/user/{userId}/tweet/{tweetId}/edit(userId=${tweet.user.id}, tweetId=${tweet.id})}">編集</a>
                 </li>
-<!--                <li>-->
-<!--                    <a class="update-button" th:href="@{/user/{userId}/tweet/{tweetId}/edit(userId=${t.user.id}, tweetId=${t.id})}">編集</a>-->
-<!--                </li>-->
                 <li th:if="${#authorization.expression('isAuthenticated()') and tweet.user.username == #authentication.principal.username}">
-                    <a th:href="@{/tweet/delete/{tweetId}(tweetId=${tweet.id})}" th:attr="data-turbo-method='delete'">削除</a>
+                    <form th:action="@{/user/{userId}/tweet/{tweetId}/delete(userId=${tweet.user.id}, tweetId=${tweet.id})}" method="post" class="delete" >
+                        <input class="delete-button" type="submit" value="削除">
+                    </form>
                 </li>
             </ul>
         </div>

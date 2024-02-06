@@ -1060,3 +1060,22 @@ footer p {
 .search-form .search-btn {
   width: 10%;
 }
+
+
+form.delete .delete-button {
+    margin: 0;
+    padding: 5px;
+    letter-spacing: 0.15em;
+    border: 0;
+    border-radius: 0;
+    color: #666;
+    font-size: 12px;
+    text-align: left;
+    background: transparent;
+}
+
+.delete input[type="submit"]:hover, .delete-button:hover {
+  background-color: #57C3E9; /* ホバー状態での背景色 */
+  color: #fff; /* ホバー状態でのテキスト色 */
+  border-radius: 0;
+}

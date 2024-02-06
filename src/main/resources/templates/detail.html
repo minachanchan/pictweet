@@ -53,12 +53,9 @@
                     <a class="update-button" th:href="@{/user/{userId}/tweet/{tweetId}/edit(userId=${t.user.id}, tweetId=${t.id})}">編集</a>
                 </li>
                 <li>
-                    <form th:action="@{/user/{userId}/tweet/{tweetId}/delete(userId=${t.user.id}, tweetId=${t.id})}" method="post">
+                    <form th:action="@{/user/{userId}/tweet/{tweetId}/delete(userId=${t.user.id}, tweetId=${t.id})}" method="post" class="delete" >
                         <input class="delete-button" type="submit" value="削除">
                     </form>
-                </li>
-                <li>
-                    <a th:href="@{/tweet/delete/{tweetId}(tweetId=${t.id})}" th:attr="data-turbo-method='delete'">削除</a>
                 </li>
             </ul>
         </div>
