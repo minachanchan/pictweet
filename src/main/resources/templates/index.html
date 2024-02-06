@@ -1,26 +1,65 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org" lang="ja">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">-->
+<!--    <title>Title</title>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<div th:insert="~{header :: header}"></div>-->
+
+
+<!--  <ul th:each = "t:${tweets}">-->
+<!--      <div class="button" >-->
+<!--          <a class="update-button" th:href="@{/tweet/{tweetId}(tweetId=${t.id})}">詳細</a>-->
+<!--      </div>-->
+<!--      <li th:text = "${t.getContent()}">-->
+<!--      </li>-->
+<!--      <li th:text = "${t.getImage()}">-->
+<!--      </li>-->
+<!--      <li th:text = "${t.user.getUsername()}">-->
+<!--      </li>-->
+<!--  </ul>-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
-    <title>Title</title>
+    <title>ツイート一覧</title>
 </head>
 <body>
 
 <div th:insert="~{header :: header}"></div>
 
-<a th:href="@{/tweetForm}">新規投稿画面</a>
-投稿の一覧表示
-  <ul th:each = "t:${tweets}">
-      <div class="button" >
-          <a class="update-button" th:href="@{/tweet/{tweetId}(tweetId=${t.id})}">詳細</a>
-      </div>
-      <li th:text = "${t.getContent()}">
-      </li>
-      <li th:text = "${t.getImage()}">
-      </li>
-      <li th:text = "${t.user.getUsername()}">
-      </li>
-  </ul>
+<div class="contents row">
+    <div th:each="tweet : ${tweets}" class="content_post" th:style="'background-image: url(' + ${tweet.image} + ');'">
+        <div class="more">
+            <span>▼</span> <!-- image_tag 'arrow_top.png' の代替 -->
+            <ul class="more_list">
+                <li>
+                    <a th:href="@{/tweet/{tweetId}(tweetId=${tweet.id})}">詳細</a>
+                </li>
+                <!-- Javaのセキュリティモデルに基づいて、ユーザーがログインしており、かつ現在ログイン中のユーザーIDがtweet.user_idと一致する場合に編集・削除リンクを表示 -->
+                <li th:if="${#authorization.expression('isAuthenticated()') and tweet.user.username == #authentication.principal.username}">
+                    <a th:href="@{/tweet/edit/{tweetId}(tweetId=${tweet.id})}">編集</a>
+                </li>
+                <li th:if="${#authorization.expression('isAuthenticated()') and tweet.user.username == #authentication.principal.username}">
+                    <a th:href="@{/tweet/delete/{tweetId}(tweetId=${tweet.id})}" th:attr="data-turbo-method='delete'">削除</a>
+                </li>
+            </ul>
+        </div>
+        <p th:text="${tweet.content}"></p> <!-- erbのtweet.textに相当 -->
+        <span class="name">
+            <a th:href="@{/users/${tweet.user.id}}">
+                <span>投稿者</span><span th:text="${tweet.user.username}"></span>
+            </a>
+        </span>
+    </div>
+</div>
+
 </body>
 </html>
