@@ -1,14 +1,29 @@
-<html xmlns:th="http://www.thymeleaf.org" th:fragment="newComment">
+<!--<html xmlns:th="http://www.thymeleaf.org" th:fragment="newComment">-->
 
-<div class="comment-title">
-    <h2>コメントする</h2>
+<!--<div class="comment-title">-->
+<!--    <h2>コメントする</h2>-->
+<!--</div>-->
+
+<!--<form th:action="@{/tweet/{tweetId}/comment(tweetId=${t.id})}" th:method="post" th:object="${commentEntity}">-->
+<!--    <div class="comment-form-wrapper" >-->
+<!--        <textarea class="comment-form" id="message" th:field="*{message}" required="required" />-->
+<!--        <div>-->
+<!--            <button class="comment-submit" type="submit">SEND</button>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</form>-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div class="container" th:fragment="newComment">
+    <form th:if="${#authorization.expression('isAuthenticated()')}" th:action="@{/tweet/{tweetId}/comment(tweetId=${t.id})}" th:method="post" th:object="${commentEntity}">
+        <textarea placeholder="コメントする" rows="2" th:field="*{message}"></textarea>
+        <button type="submit">SEND</button>
+    </form>
+    <strong th:unless="${#authorization.expression('isAuthenticated()')}"><p>※※※ コメントの投稿には新規登録/ログインが必要です ※※※</p></strong>
 </div>
 
-<form th:action="@{/tweet/{tweetId}/comment(tweetId=${t.id})}" th:method="post" th:object="${commentEntity}">
-    <div class="comment-form-wrapper" >
-        <textarea class="comment-form" id="message" th:field="*{message}" required="required" />
-        <div>
-            <button class="comment-submit" type="submit">SEND</button>
-        </div>
-    </div>
-</form>
+</body>
+</html>

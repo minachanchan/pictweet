@@ -1,32 +1,100 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org" lang="ja">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">-->
+<!--    <title>Title</title>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<div th:insert="~{header :: header}"></div>-->
+
+<!--<h1>ツイート詳細画面</h1>-->
+
+<!--<div class="button" th:if="${#authentication.name == t.user.username}">-->
+<!--    <a class="update-button" th:href="@{/user/{userId}/tweet/{tweetId}/edit(userId=${t.user.id}, tweetId=${t.id})}">編集</a>-->
+<!--    <form th:action="@{/user/{userId}/tweet/{tweetId}/delete(userId=${t.user.id}, tweetId=${t.id})}" method="post">-->
+<!--        <input class="delete-button" type="submit" value="削除">-->
+<!--    </form>-->
+<!--</div>-->
+
+
+<!--    <li th:text = "${t.getContent()}">-->
+<!--    </li>-->
+<!--    <li th:text = "${t.getImage()}">-->
+<!--    </li>-->
+<!--    <li th:text = "${t.user.getUsername()}">-->
+<!--    </li>-->
+
+<!--<div th:insert="newComment :: newComment"></div>-->
+<!--<div th:insert="showComment :: showComment"></div>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+    <title>ツイート詳細</title>
 </head>
 <body>
 
 <div th:insert="~{header :: header}"></div>
 
-<h1>ツイート詳細画面</h1>
+<div class="contents row">
+    <div class="content_post" th:style="'background-image: url(' + ${t.image} + ');'">
+        <div th:if="${#authentication.name == t.user.username}" class="more">
+            <span>▼</span> <!-- erbのimage_tag 'arrow_top.png' の代替 -->
+            <ul class="more_list">
+                <li>
+                    <a class="update-button" th:href="@{/user/{userId}/tweet/{tweetId}/edit(userId=${t.user.id}, tweetId=${t.id})}">編集</a>
+                </li>
+                <li>
+                    <form th:action="@{/user/{userId}/tweet/{tweetId}/delete(userId=${t.user.id}, tweetId=${t.id})}" method="post" class="delete" >
+                        <input class="delete-button" type="submit" value="削除">
+                    </form>
+                </li>
+            </ul>
+        </div>
+        <p th:text="${t.getContent()}"></p>
+        <span class="name">
+            <a th:href="@{/users/${t.user.id}}">
+                <span>投稿者</span><span th:text="${t.user.username}"></span>
+            </a>
+        </span>
+    </div>
 
-<div class="button" th:if="${#authentication.name == t.user.username}">
-    <a class="update-button" th:href="@{/user/{userId}/tweet/{tweetId}/edit(userId=${t.user.id}, tweetId=${t.id})}">編集</a>
-    <form th:action="@{/user/{userId}/tweet/{tweetId}/delete(userId=${t.user.id}, tweetId=${t.id})}" method="post">
-        <input class="delete-button" type="submit" value="削除">
-    </form>
+    <!-- コメント投稿欄(現行のものを使用) -->
+<!--    <div th:insert="newComment :: newComment"></div>-->
+    <!-- コメント表示欄(現行のものを使用) -->
+<!--    <div th:insert="showComment :: showComment"></div>-->
+
+    <div class="container" >
+        <form th:if="${#authorization.expression('isAuthenticated()')}" th:action="@{/tweet/{tweetId}/comment(tweetId=${t.id})}" th:method="post" th:object="${commentEntity}">
+            <textarea placeholder="コメントする" rows="2" th:field="*{message}"></textarea>
+            <button type="submit">SEND</button>
+        </form>
+        <strong th:unless="${#authorization.expression('isAuthenticated()')}"><p>※※※ コメントの投稿には新規登録/ログインが必要です ※※※</p></strong>
+
+        <div class="comments">
+            <h4>＜コメント一覧＞</h4>
+            <div th:if="${#lists.isEmpty(comments)}">
+                <p>コメントはまだありません。</p>
+            </div>
+            <div th:each="comment : ${comments}">
+                <p>
+                    <strong><a th:href="@{'/users/' + ${comment.user.id}}" th:text="${comment.user.username}">ユーザー名</a>：</strong>
+                    <span th:text="${comment.message}">コメントテキスト</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+
 </div>
-
-
-    <li th:text = "${t.getContent()}">
-    </li>
-    <li th:text = "${t.getImage()}">
-    </li>
-    <li th:text = "${t.user.getUsername()}">
-    </li>
-
-<div th:insert="newComment :: newComment"></div>
-<div th:insert="showComment :: showComment"></div>
 
 </body>
 </html>
