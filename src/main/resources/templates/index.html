@@ -45,8 +45,11 @@
                 </li>
                 <!-- Javaのセキュリティモデルに基づいて、ユーザーがログインしており、かつ現在ログイン中のユーザーIDがtweet.user_idと一致する場合に編集・削除リンクを表示 -->
                 <li th:if="${#authorization.expression('isAuthenticated()') and tweet.user.username == #authentication.principal.username}">
-                    <a th:href="@{/tweet/edit/{tweetId}(tweetId=${tweet.id})}">編集</a>
+                    <a th:href="@{/user/{userId}/tweet/{tweetId}/edit(userId=${tweet.user.id}, tweetId=${tweet.id})}">編集</a>
                 </li>
+<!--                <li>-->
+<!--                    <a class="update-button" th:href="@{/user/{userId}/tweet/{tweetId}/edit(userId=${t.user.id}, tweetId=${t.id})}">編集</a>-->
+<!--                </li>-->
                 <li th:if="${#authorization.expression('isAuthenticated()') and tweet.user.username == #authentication.principal.username}">
                     <a th:href="@{/tweet/delete/{tweetId}(tweetId=${tweet.id})}" th:attr="data-turbo-method='delete'">削除</a>
                 </li>
