@@ -45,27 +45,26 @@
 <div th:insert="~{header :: header}"></div>
 
 <div class="contents row">
-    <div class="content_post" th:style="'background-image: url(' + ${t.image} + ');'">
-        <div th:if="${#authentication.name == t.user.username}" class="more">
-            <span>▼</span> <!-- erbのimage_tag 'arrow_top.png' の代替 -->
-            <ul class="more_list">
-                <li>
-<!--                    <a class="update-button" th:href="@{/user/{userId}/tweet/{tweetId}/edit(userId=${user.id}, tweetId=${user.tweet.id})}">編集</a>-->
-                </li>
-                <li>
-<!--                    <form th:action="@{/user/{userId}/tweet/{tweetId}/delete(userId=${user.id}, tweetId=${user.tweet.id})}" method="post" class="delete" >-->
-<!--                        <input class="delete-button" type="submit" value="削除">-->
-<!--                    </form>-->
-                </li>
-            </ul>
-        </div>
-        <p th:text="${user.tweet.getContent()}"></p>
-<!--        <span class="name">-->
-<!--            <a th:href="@{/users/${user.id}}">-->
-<!--                <span>投稿者</span><span th:text="${user.username}"></span>-->
-<!--            </a>-->
-<!--        </span>-->
+<div th:each="tweet : ${tweets}" class="content_post" th:style="'background-image: url(' + ${tweet.image} + ');'">
+    <div class="more">
+        <span>▼</span> <!-- image_tag 'arrow_top.png' の代替 -->
+        <ul class="more_list">
+            <li>
+                <a th:href="@{/tweet/{tweetId}(tweetId=${tweet.id})}">詳細</a>
+            </li>
+            <!-- Javaのセキュリティモデルに基づいて、ユーザーがログインしており、かつ現在ログイン中のユーザーIDがtweet.user_idと一致する場合に編集・削除リンクを表示 -->
+            <li th:if="${#authorization.expression('isAuthenticated()') and tweet.user.username == #authentication.principal.username}">
+                <a th:href="@{/user/{userId}/tweet/{tweetId}/edit(userId=${tweet.user.id}, tweetId=${tweet.id})}">編集</a>
+            </li>
+            <li th:if="${#authorization.expression('isAuthenticated()') and tweet.user.username == #authentication.principal.username}">
+                <form th:action="@{/user/{userId}/tweet/{tweetId}/delete(userId=${tweet.user.id}, tweetId=${tweet.id})}" method="post" class="delete" >
+                    <input class="delete-button" type="submit" value="削除">
+                </form>
+            </li>
+        </ul>
     </div>
+    <p th:text="${tweet.content}"></p> <!-- erbのtweet.textに相当 -->
+</div>
 </div>
 
 </body>
