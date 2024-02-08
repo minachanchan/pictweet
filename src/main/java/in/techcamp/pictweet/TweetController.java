@@ -6,6 +6,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,6 +48,12 @@ public class TweetController {
 //        var tweetList = tweetRepository.findAll();
         List<TweetEntity> tweetList = tweetRepository.findAll();
         model.addAttribute("tweets",tweetList);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            Integer userId = userDetails.getId();
+            model.addAttribute("userId",userId);
+        }
         return "index";
     }
 

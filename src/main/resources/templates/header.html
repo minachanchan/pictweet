@@ -37,7 +37,7 @@
                 </span>
                     <ul class="user__info">
                         <li>
-                            <a th:href="@{/}">マイページ</a>
+                            <a th:href="@{/user/{userId}(userId=${#authentication.principal.id})}">マイページ</a>
                             <form th:action="@{/logout}" method="post" class="logout">
                                 <input class="logout-button" type="submit" value="ログアウト">
                             </form>
