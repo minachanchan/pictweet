@@ -14,6 +14,10 @@ public class CustomUserDetails implements UserDetails {
         this.userEntity = userEntity;
     }
 
+    public UserEntity getUserEntity() {
+        return this.userEntity;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.emptyList(); // ここでは権限は使っていないようなので空のリストを返します

@@ -70,9 +70,12 @@ public class TweetController {
       public  String createTweet(@ModelAttribute("tweetForm") TweetEntity tweetEntity,
                                Authentication authentication,
                                Model model){
-        User authenticatedUser = (User) authentication.getPrincipal();
-        String username = authenticatedUser.getUsername();
-        UserEntity user = userRepository.findByUsername(username);
+//        User authenticatedUser = (User) authentication.getPrincipal();
+        CustomUserDetails authenticatedUserDetails = (CustomUserDetails) authentication.getPrincipal();
+//        String username = authenticatedUser.getUsername();
+//        String username = authenticatedUserDetails.getUsername();
+//        UserEntity user = userRepository.findByUsername(username);
+        UserEntity user = authenticatedUserDetails.getUserEntity();
         tweetEntity.setUser(user);
         try{
 //            tweetRepository.insert(form.getContent(),form.getImage());
