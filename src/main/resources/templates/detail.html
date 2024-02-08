@@ -61,7 +61,7 @@
         </div>
         <p th:text="${t.getContent()}"></p>
         <span class="name">
-            <a th:href="@{/users/${t.user.id}}">
+            <a th:href="@{/user/{userId}(userId=${t.user.id})}">
                 <span>投稿者</span><span th:text="${t.user.username}"></span>
             </a>
         </span>
