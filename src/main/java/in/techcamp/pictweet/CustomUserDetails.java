@@ -33,7 +33,6 @@ public class CustomUserDetails implements UserDetails {
         return userEntity.getUsername();
     }
 
-    // 省略: isEnabled, isAccountNonExpired, isAccountNonLocked, isCredentialsNonExpired
     @Override
     public boolean isAccountNonExpired() {
         return true; // アカウントが期限切れでないことを示す
@@ -59,6 +58,4 @@ public class CustomUserDetails implements UserDetails {
         return userEntity.getId();
     }
 
-    // UserDetailsインターフェースのその他のメソッドも実装する必要がありますが、
-    // この例では省略しています。適宜、デフォルト実装またはカスタム実装を追加してください。
 }
