@@ -29,6 +29,7 @@ public class UserController {
         try {
 //            userRepository.save(userEntity);
             userService.registerNewUser(userEntity);
+
         } catch (Exception e){
             model.addAttribute("errorMessage", e.getMessage());
             return "register";
