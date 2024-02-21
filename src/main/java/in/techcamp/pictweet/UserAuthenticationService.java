@@ -23,6 +23,7 @@ public class UserAuthenticationService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found with username: " + username);
         }
 
-        return new User(userEntity.getUsername(), userEntity.getPassword(), Collections.emptyList());
+//        return new User(userEntity.getUsername(), userEntity.getPassword(), Collections.emptyList());
+        return new CustomUserDetails(userEntity);
     }
 }

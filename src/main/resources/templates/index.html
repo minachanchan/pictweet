@@ -56,7 +56,7 @@
         </div>
         <p th:text="${tweet.content}"></p> <!-- erbのtweet.textに相当 -->
         <span class="name">
-            <a th:href="@{/users/${tweet.user.id}}">
+            <a th:href="@{/user/{userId}(userId=${tweet.user.id})}">
                 <span>投稿者</span><span th:text="${tweet.user.username}"></span>
             </a>
         </span>

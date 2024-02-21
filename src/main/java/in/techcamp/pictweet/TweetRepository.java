@@ -2,7 +2,10 @@ package in.techcamp.pictweet;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface TweetRepository extends JpaRepository<TweetEntity, Integer> {
+    List<TweetEntity> findByUser_id(Integer userId);
 }
 
 
