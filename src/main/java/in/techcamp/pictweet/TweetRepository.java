@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface TweetRepository extends JpaRepository<TweetEntity, Integer> {
     List<TweetEntity> findByUser_id(Integer userId);
+    List<TweetEntity> findByContentContaining(String keyword);
 }
 
 
