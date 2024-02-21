@@ -32,9 +32,9 @@
     <div class="header__bar row">
         <h1 class="grid-6"><a th:href="@{/}">PicTweet</a></h1>
         <div th:if="${#authorization.expression('isAuthenticated()')}" class="user_nav grid-6">
-                <span th:text="${#authentication?.principal?.username}" >
+            <span>
+                <span th:text="${#authentication?.principal?.username}" class="username" ></span>
                     <!-- ログインユーザのニックネーム表示 -->
-                </span>
                     <ul class="user__info">
                         <li>
                             <a th:href="@{/user/{userId}(userId=${#authentication.principal.id})}">マイページ</a>
@@ -43,6 +43,7 @@
                             </form>
                         </li>
                     </ul>
+            </span>
             <a th:href="@{/tweetForm}" class="post">投稿する</a>
 <!--            <a th:href="@{/tweetForm}">新規投稿画面</a>-->
         </div>

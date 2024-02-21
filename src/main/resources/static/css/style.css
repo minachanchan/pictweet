@@ -786,7 +786,13 @@ header.header .user_nav span {
   position: relative;
 }
 
-header.header .user_nav span:after {
+header.header .user_nav div:after {
+  content: '▼';
+  font-size: .7em;
+  margin-left: 4px;
+}
+
+.username:after {
   content: '▼';
   font-size: .7em;
   margin-left: 4px;
