@@ -47,7 +47,7 @@
 <div class="contents row">
     <div class="content_post" th:style="'background-image: url(' + ${t.image} + ');'">
         <div th:if="${#authentication.name == t.user.username}" class="more">
-            <span>▼</span> <!-- erbのimage_tag 'arrow_top.png' の代替 -->
+            <span><img th:src="@{/images/arrow_top.png}"/></span>
             <ul class="more_list">
                 <li>
                     <a class="update-button" th:href="@{/user/{userId}/tweet/{tweetId}/edit(userId=${t.user.id}, tweetId=${t.id})}">編集</a>

@@ -47,7 +47,7 @@
 <div class="contents row">
 <div th:each="tweet : ${tweets}" class="content_post" th:style="'background-image: url(' + ${tweet.image} + ');'">
     <div class="more">
-        <span>▼</span> <!-- image_tag 'arrow_top.png' の代替 -->
+        <span><img th:src="@{/images/arrow_top.png}"/></span>
         <ul class="more_list">
             <li>
                 <a th:href="@{/tweet/{tweetId}(tweetId=${tweet.id})}">詳細</a>
