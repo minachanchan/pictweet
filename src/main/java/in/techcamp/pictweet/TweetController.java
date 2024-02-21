@@ -5,6 +5,7 @@ package in.techcamp.pictweet;
 import jakarta.persistence.EntityNotFoundException;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -43,7 +44,8 @@ public class TweetController {
 //                new TweetEntity(3, "投稿3", "")
 //        );
 //        var tweetList = tweetRepository.findAll();
-        List<TweetEntity> tweetList = tweetRepository.findAll();
+//        List<TweetEntity> tweetList = tweetRepository.findAll();
+        List<TweetEntity> tweetList = tweetRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
         model.addAttribute("tweets",tweetList);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {

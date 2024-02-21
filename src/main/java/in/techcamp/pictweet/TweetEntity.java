@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 //@AllArgsConstructor
@@ -18,6 +19,14 @@ public class TweetEntity {
     private long id;
     private String content;
     private String image;
+
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.EAGER)
