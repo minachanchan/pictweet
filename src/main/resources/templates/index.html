@@ -35,9 +35,14 @@
 
 <div th:insert="~{header :: header}"></div>
 
-<form th:action="@{/search}" th:method="get" >
-    <input type="text" id="summaryInput" name="keyword">
-    <button type="submit">検索</button>
+<!--<form th:action="@{/search}" th:method="get" >-->
+<!--    <input type="text" id="summaryInput" name="keyword">-->
+<!--    <button type="submit">検索</button>-->
+<!--</form>-->
+
+<form th:action="@{/search}" th:method="get" class="search-form">
+    <input type="text" id="summaryInput" name="keyword" placeholder="投稿を検索する" class="search-input">
+    <button type="submit" class="search-btn">検索</button>
 </form>
 
 <div class="contents row">
